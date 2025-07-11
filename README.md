@@ -123,6 +123,22 @@ There are no free minutes for parking.
 - URL: `http://localhost:8080/tariffs/calculate`
 - Body: `raw` → `JSON`
 
+
+#### Charging Session Example Explanation
+
+This input describes one full charging session, with time and energy usage logged at different moments:
+- Start of charging
+At 10:00, charging begins. The energy meter reads 0.0 kWh.
+- End of charging
+At 11:00, charging ends. The energy meter now shows 120.0 kWh.
+→ That means the car consumed 120 kWh during 1 hour of charging.
+- Start of parking
+At 11:01, charging stops, but the car remains plugged in.
+The state changes to PARKING.
+- End of session
+At 13:01, the car is still parked. The energy value remains 120.0 kWh, so no more energy was used.
+→ The car was parked for 2 hours after charging finished.
+
 ---
 
 ## How Pricing Works
