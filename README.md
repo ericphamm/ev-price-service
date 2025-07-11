@@ -68,6 +68,20 @@ Use your IDE or command line:
 - URL: `http://localhost:8080/tariffs`
 - Body: `raw` → `JSON`
 
+
+####  Tariff Explanation
+
+This tariff defines how you will be charged for using the charging station:
+	•	KWH:
+You pay 10 CZK for every kilowatt-hour (kWh) of electricity used.
+There are no free kWh — all energy is billed.
+	•	CHARGING_MINUTE:
+You pay 2 CZK per minute while the car is actively charging.
+The first 20 minutes are free.
+	•	PARKING_MINUTE:
+You pay 3 CZK per minute if the car stays plugged in after charging is done.
+There are no free minutes for parking.
+
 ---
 
 ### 2. Calculate Charging Price
