@@ -56,7 +56,7 @@ public class TariffService {
         List<StationState> states = request.getStates();
 
         if (states == null || states.size() < 2) {
-            throw new IllegalArgumentException("The list of states must contain at least ");
+            throw new IllegalArgumentException("The list must contain at least 2 states");
         }
 
         TariffStructure tariff = tariffRepository.findById(tariffId)
