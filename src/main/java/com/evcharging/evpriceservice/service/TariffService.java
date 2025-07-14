@@ -55,6 +55,10 @@ public class TariffService {
         Long tariffId = request.getTariffId();
         List<StationState> states = request.getStates();
 
+        if (states == null || states.size() < 2) {
+            throw new IllegalArgumentException("The list of states must contain at least ");
+        }
+
         TariffStructure tariff = tariffRepository.findById(tariffId)
                 .orElseThrow(() -> new EntityNotFoundException("Tariff not found with id: " + tariffId));
 
@@ -74,6 +78,9 @@ public class TariffService {
 
                 case CHARGING_MINUTE -> {
                     long minutes = 0;
+                    if (states.isEmpty() && states == null) {
+                        throw new IllegalArgumentException("List of states cant be empty");
+                    }
                     for (int i = 1; i < states.size(); i++) {
                         StationState prev = states.get(i - 1);
                         StationState curr = states.get(i);
