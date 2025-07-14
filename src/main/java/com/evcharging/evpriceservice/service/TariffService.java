@@ -77,33 +77,32 @@ public class TariffService {
                 }
 
                 case CHARGING_MINUTE -> {
-                    long minutes = 0;
-                    if (states.isEmpty() && states == null) {
-                        throw new IllegalArgumentException("List of states cant be empty");
-                    }
+                    long seconds = 0;
                     for (int i = 1; i < states.size(); i++) {
                         StationState prev = states.get(i - 1);
                         StationState curr = states.get(i);
                         if (prev.getState() == StationState.State.CHARGING) {
-                            long diff = java.time.Duration.between(prev.getDateTime(), curr.getDateTime()).toMinutes();
-                            minutes += diff;
+                            long diff = java.time.Duration.between(prev.getDateTime(), curr.getDateTime()).toSeconds();
+                            seconds += diff;
                         }
                     }
-                    long billable = Math.max(0, minutes - component.getFreeUnits().longValue());
+                    long totalMinutes = (seconds + 59) / 60;
+                    long billable = Math.max(0, totalMinutes - component.getFreeUnits().longValue());
                     componentCost = component.getPrice().multiply(BigDecimal.valueOf(billable));
                 }
 
                 case PARKING_MINUTE -> {
-                    long minutes = 0;
+                    long seconds = 0;
                     for (int i = 1; i < states.size(); i++) {
                         StationState prev = states.get(i - 1);
                         StationState curr = states.get(i);
                         if (prev.getState() == StationState.State.PARKING) {
-                            long diff = java.time.Duration.between(prev.getDateTime(), curr.getDateTime()).toMinutes();
-                            minutes += diff;
+                            long diff = java.time.Duration.between(prev.getDateTime(), curr.getDateTime()).toSeconds();
+                            seconds += diff;
                         }
                     }
-                    long billable = Math.max(0, minutes - component.getFreeUnits().longValue());
+                    long totalMinutes = (seconds + 59) / 60;
+                    long billable = Math.max(0, totalMinutes - component.getFreeUnits().longValue());
                     componentCost = component.getPrice().multiply(BigDecimal.valueOf(billable));
                 }
             }
